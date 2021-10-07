@@ -39,3 +39,9 @@ profile
 *.sdf
 *.opensdf
 *.suo
+code/sdl/backup/sdl_glimp.c
+VoyagerNX.elf
+VoyagerNX.nacp
+VoyagerNX.nro
+VoyagerNX.nso
+VoyagerNX.pfs0
