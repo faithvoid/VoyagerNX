@@ -1,6 +1,23 @@
+## **VoyagerNX**
+A port of Star Trek Voyager: Elite Force Holomatch for the Nintendo Switch. Compatible with both controllers and keyboard + mouse controls! Based off of Tulip Voyager (a fork of the Lilium Voyager ioquake3 engine).
+
+## **Installation**
+- Latest full build including game files can be downloaded and copied from <a href="https://accela.design/downloads/VoyagerNX.zip">here!<br/></a>
+- Copy release files to /switch/ folder
+- If providing your own baseoa files, copy baseEF from a copy of Holomatch, making sure not to replace any files.
+- Launch via HBMenu (by pressing R, not album!)
+- Set phasers to frag!
+
+## **Bugs**
+- Sleep mode causes the game and sometimes Horizon to crash. No idea what's causing this yet.
+- A small amount of slowdown can happen during really hectic battles in larger maps. This mostly occurs in custom maps and happens regardless of graphical settings (although dropping the resolution may help).
+- If you switch between controller and keyboard + mouse input mid-match, your camera may start spinning wildly. Just press ESC/+, click with your desired input, then press ESC/+ again and it should resolve it. This might not even be a real bug and might just be my wireless keyboard, but I'm putting it here just to be safe.
+
+## **Original ReadMe**
 <img src="https://raw.githubusercontent.com/zturtleman/lilium-voyager/master/misc/lilium.png" width="64">
 
-**VoyagerNX** is a port of **Tulip Voyager**, a fork of **Lilium Voyager** which is a fork of [ioquake3](https://github.com/ioquake/ioq3) for running _Star Trek Voyager: Elite Force Holomatch_ (multiplayer). It is based on Thilo Schulz' [ioEF engine](http://thilo.tjps.eu/efport-progress/) (also known as iostvoyHM). The focus for Lilium Voyager is to maintain Elite Force multiplayer support on newer ioquake3 versions.
+**Lilium Voyager** is a fork of **Lilium Voyager** is a fork of [ioquake3](https://github.com/ioquake/ioq3) for running _Star Trek Voyager: Elite Force Holomatch_ (multiplayer). It is based on Thilo Schulz' [ioEF engine](http://thilo.tjps.eu/efport-progress/) (also known as iostvoyHM). The focus for Lilium Voyager is to maintain Elite Force multiplayer support on newer ioquake3 versions.
+
 
 Differences from ioEF 1.38-rc1 (2011):
 
