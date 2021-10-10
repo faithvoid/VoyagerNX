@@ -18,8 +18,8 @@ Lilium Voyager code commits: [compare/upstream...master](https://github.com/ztur
 The source code for the Elite Force game, cgame, and ui code is not included as it remains under a non-free license.
 
 ## Installation
-- Download latest release files
-- Copy to /switch/ folder on your SD card, along with the baseEF folder from Holomatch (which can be acquired legally for free from holomat.ch). **Do not overwrite any files!**
+- Latest full build including game files can be downloaded and copied from <a href="https://accela.design/downloads/OpenArenaNX.zip">here!<br/></a>
+- Copy to /switch/ folder on your SD card, along with the baseEF folder from Holomatch if you're providing your own baseEF files. **Do not overwrite any files!**
 - Launch via regular HBMenu (NOT Applet mode!)
 
 ## Bugs
