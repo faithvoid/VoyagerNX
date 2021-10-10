@@ -5,7 +5,7 @@ A port of Star Trek Voyager: Elite Force Holomatch for the Nintendo Switch. Comp
 
 
 ## **Installation**
-- Latest full build including game files can be downloaded and copied from <a href="https://accela.design/downloads/VoyagerNX.zip">here!<br/></a>
+- Latest full build including game files can be downloaded and copied from <a href="https://accela.design/downloads/switch-homebrew/VoyagerNX.zip">here!<br/></a>
 - Copy release files to /switch/ folder
 - If providing your own baseoa files, copy baseEF from a copy of Holomatch, making sure not to replace any files.
 - Launch via HBMenu (by pressing R, not album!)
