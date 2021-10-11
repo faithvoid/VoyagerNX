@@ -12,7 +12,8 @@ A port of Star Trek Voyager: Elite Force Holomatch for the Nintendo Switch. Comp
 - Set phasers to frag!
 
 ## **Bugs**
-- Sleep mode causes the game and sometimes Horizon to crash. No idea what's causing this yet.
+- Sleep mode causes the game and sometimes Horizon to crash. This seems to be common with ioquake3 ports and I have no idea what's causing this yet.
+- Solo Match leads to a softlock at the end of every match. This can be worked around by using "Multi Match" to create a bot match instead. If you end up softlocked, you can close the game by pressing Down to open a terminal, pressing L to bring up a virtual keyboard, typing "/quit", pressing Return, then pressing Enter twice, which should get you back to HBMenu.
 - A small amount of slowdown can happen during really hectic battles in larger maps. This mostly occurs in custom maps and happens regardless of graphical settings (although dropping the resolution may help).
 - If you switch between controller and keyboard + mouse input mid-match, your camera may start spinning wildly. Just press ESC/+, click with your desired input, then press ESC/+ again and it should resolve it. This might not even be a real bug and might just be my wireless keyboard, but I'm putting it here just to be safe.
 
@@ -55,15 +56,6 @@ Differences from ioEF 1.38-rc1 (2011):
 Lilium Voyager code commits: [compare/upstream...master](https://github.com/zturtleman/lilium-voyager/compare/upstream...master)
 
 The source code for the Elite Force game, cgame, and ui code is not included as it remains under a non-free license.
-
-## Installation
-- Latest full build including game files can be downloaded and copied from <a href="https://accela.design/downloads/VoyagerNX.zip">here!<br/></a>
-- Copy to /switch/ folder on your SD card, along with the baseEF folder from Holomatch if you're providing your own baseEF files. **Do not overwrite any files!**
-- Launch via regular HBMenu (NOT Applet mode!)
-
-## Bugs
-- Sleep mode crashes the game and sometimes Atmosphere. This has been reported in other ioquake3 ports on the Switch (ie; iortcw), so I'm not sure where to begin diagnosing the issue. 
-- Solo Match leads to a softlock at the end of every match. This can be worked around by using "Multi Match" to create a bot match instead. If you end up softlocked, you can close the game by pressing Down to open a terminal, pressing L to bring up a virtual keyboard, typing "/quit", pressing Return, then pressing Enter twice, which should get you back to HBMenu.
 
 ## Compiling
 
