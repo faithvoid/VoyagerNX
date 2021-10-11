@@ -33,6 +33,11 @@ A port of Star Trek Voyager: Elite Force Holomatch for the Nintendo Switch. Comp
 - Left Stick In - Vote No
 - Right Stick In - Vote Yes
 
+## TODO
+
+- Add gyroscope support (the gyroscope controls from ioquake3-nx seem to throw tons of errors when attempting to compile them).
+
+
 
 [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/donate/?cmd=_s-xclick&hosted_button_id=8GF4A3XS7ZHFY)
 
@@ -97,7 +102,3 @@ Lilium Voyager is licensed under [the GNU GPLv2](COPYING.txt) (or at your option
 ## Contributing
 
 Please submit all patches as a GitHub pull request.
-
-## TODO
-
-- Add gyroscope support (the gyroscope controls from ioquake3-nx seem to throw tons of errors when attempting to compile them).
