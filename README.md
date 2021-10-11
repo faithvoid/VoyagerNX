@@ -69,7 +69,12 @@ The source code for the Elite Force game, cgame, and ui code is not included as 
 
 Lilium Voyager is compiled using `make`. For details see [building ioquake3](http://wiki.ioquake3.org/Building_ioquake3) and the [ioquake3 readme](README-ioq3.md).
 
-To compile VoyagerNX, make sure your DevKitPro environment is properly set up and run "make -f Makefile.nx"
+For Nintendo Switch:
+
+- Install and set up devkitA64.
+- Ensure you have the latest versions of the following libraries installed in your dkA64 environment: libnx, switch-sdl2, switch-mesa, switch-libdrm_nouveau, switch-libjpeg-turbo, switch-zlib, switch-libogg, switch-libvorbis, switch-curl, switch-libmad (all covered by switch-portlibs: easy install: dkp-pacman -S switch-portlibs)
+- Call make -f Makefile.nx in this directory. This will produce VoyagerNX.nro.
+- Refer to the installation instructions on the releases to install and run the game on your Switch.
 
 The Visual Studio project files are not supported.
 
