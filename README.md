@@ -33,9 +33,20 @@ A port of Star Trek Voyager: Elite Force Holomatch for the Nintendo Switch. Comp
 - Left Stick In - Vote No
 - Right Stick In - Vote Yes
 
+## Enable Gyro (EXPERIMENTAL)
+Modify your hmconfig.cfg file to add these variables:
+```
+seta in_gyromouse "1"
+seta in_gyromouse_debug "0"
+seta in_gyromouse_yaw_axis "0"
+seta in_gyromouse_pitch "-10"
+seta in_gyromouse_yaw "-20.0"
+seta in_gyromouse_pitch_ui "0.0"
+seta in_gyromouse_yaw_ui "0.0"
+```
 ## TODO
 
-- Add gyroscope support (the gyroscope controls from ioquake3-nx seem to throw tons of errors when attempting to compile them).
+- Finish gyroscope support (75% of the way or so done, just need to clean up the code and check if there's a better way to implement said code.)
 
 
 
