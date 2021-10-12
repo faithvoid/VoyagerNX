@@ -32,7 +32,7 @@ include $(DEVKITPRO)/libnx/switch_rules
 #---------------------------------------------------------------------------------
 APP_TITLE	:=	VoyagerNX
 APP_AUTHOR	:=	faithvoid
-APP_VERSION	:=	0.8.2
+APP_VERSION	:=	0.8.2.1
 
 TARGET		:=	VoyagerNX
 BUILD		:=	build

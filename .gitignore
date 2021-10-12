@@ -45,3 +45,5 @@ VoyagerNX.nso
 VoyagerNX.nro
 VoyagerNX.nacp
 VoyagerNX.elf
+code/sdl/backup/sdl_input_nx.c
+code/q3_ui/bak/ui_controls2.c
