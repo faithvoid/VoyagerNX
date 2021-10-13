@@ -34,7 +34,7 @@ A port of Star Trek Voyager: Elite Force Holomatch for the Nintendo Switch. Comp
 - Right Stick In - Vote Yes
 
 ## Enable Gyro (EXPERIMENTAL)
-Modify your hmconfig.cfg file to add these variables:
+Modify your hmconfig.cfg file to add these variables, or replace hmconfig.cfg with hmconfig_gyro.cfg:
 ```
 seta in_gyromouse "1"
 seta in_gyromouse_debug "0"
