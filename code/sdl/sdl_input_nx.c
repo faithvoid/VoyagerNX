@@ -54,6 +54,7 @@ static cvar_t *in_gyromouse_yaw_ui   = NULL; // Negative values invert (in-menu)
 static cvar_t *in_gyromouse_yaw_axis     = NULL; // 0 = .y is yaw, 1 = .z is yaw
 static cvar_t *in_gyromouse_debug    = NULL;
 static HidSixAxisSensorHandle sixaxis_handles[4];
+static PadState pad;
 
 static cvar_t *in_joystick          = NULL;
 static cvar_t *in_joystickThreshold = NULL;
@@ -1298,13 +1299,17 @@ IN_InitGyro
 */
 void IN_InitGyro( void )
 {
-	hidGetSixAxisSensorHandles(&sixaxis_handles[0], 2, HidNpadIdType_No1, HidNpadStyleTag_NpadJoyDual);
-		hidGetSixAxisSensorHandles(&sixaxis_handles[2], 1, HidNpadIdType_No1, HidNpadStyleTag_NpadFullKey);
-		hidGetSixAxisSensorHandles(&sixaxis_handles[3], 1, HidNpadIdType_Handheld, HidNpadStyleTag_NpadHandheld);
-		hidStartSixAxisSensor(sixaxis_handles[0]);
-		hidStartSixAxisSensor(sixaxis_handles[1]);
-		hidStartSixAxisSensor(sixaxis_handles[2]);
-		hidStartSixAxisSensor(sixaxis_handles[3]);
+
+padConfigureInput(1, HidNpadStyleSet_NpadStandard);
+padInitializeDefault(&pad);
+
+hidGetSixAxisSensorHandles(&sixaxis_handles[0], 1, HidNpadIdType_Handheld, HidNpadStyleTag_NpadHandheld);
+hidGetSixAxisSensorHandles(&sixaxis_handles[1], 1, HidNpadIdType_No1,      HidNpadStyleTag_NpadFullKey);
+hidGetSixAxisSensorHandles(&sixaxis_handles[2], 2, HidNpadIdType_No1,      HidNpadStyleTag_NpadJoyDual);
+hidStartSixAxisSensor(sixaxis_handles[0]);
+hidStartSixAxisSensor(sixaxis_handles[1]);
+hidStartSixAxisSensor(sixaxis_handles[2]);
+hidStartSixAxisSensor(sixaxis_handles[3]);
 }
 
 
@@ -1315,27 +1320,34 @@ IN_ProcessGyro
 */
 void IN_ProcessGyro( void )
 {
+	padUpdate(&pad);
   if( in_gyromouse->integer ) {
 		HidSixAxisSensorState sixaxis = { 0 };
-				const u64 stylemask = hidGetNpadStyleSet(HidNpadIdType_No1) | hidGetNpadStyleSet(HidNpadIdType_Handheld);
-				size_t numstates = 0;
-				if (stylemask & HidNpadStyleTag_NpadHandheld)
-					numstates = hidGetSixAxisSensorStates(sixaxis_handles[3], &sixaxis, 1);
-				else if (stylemask & HidNpadStyleTag_NpadFullKey)
-					numstates = hidGetSixAxisSensorStates(sixaxis_handles[2], &sixaxis, 1);
-				else if (stylemask & HidNpadStyleTag_NpadJoyDual) // hope to god right joycon is connected
-					numstates = hidGetSixAxisSensorStates(sixaxis_handles[1], &sixaxis, 1);
-				if (numstates)
+				const u64 style_set = padGetStyleSet(&pad);
+				const u64 attrib = padGetAttributes(&pad);
+				if (style_set & HidNpadStyleTag_NpadHandheld)
+				hidGetSixAxisSensorStates(sixaxis_handles[0], &sixaxis, 1);
+				else if (style_set & HidNpadStyleTag_NpadFullKey)
+				hidGetSixAxisSensorStates(sixaxis_handles[1], &sixaxis, 1);
+				else if (style_set & HidNpadStyleTag_NpadJoyDual)
+				// For JoyDual, read from either the Left or Right Joy-Con depending on which is/are connected
+            if (attrib & HidNpadAttribute_IsLeftConnected)
+                hidGetSixAxisSensorStates(sixaxis_handles[2], &sixaxis, 1);
+            else if (attrib & HidNpadAttribute_IsRightConnected)
+                hidGetSixAxisSensorStates(sixaxis_handles[3], &sixaxis, 1);
+
 
     if ( in_gyromouse_debug->integer ) {
-			Com_Printf("Acceleration:     x=% .4f, y=% .4f, z=% .4f\n", sixaxis.angular_velocity.x, sixaxis.angular_velocity.y, sixaxis.angular_velocity.z);
+			Com_Printf("Acceleration:     x=% .4f, y=% .4f, z=% .4f\n", sixaxis.acceleration.x, sixaxis.acceleration.y, sixaxis.acceleration.z);
+			Com_Printf("Angular velocity: x=% .4f, y=% .4f, z=% .4f\n", sixaxis.angular_velocity.x, sixaxis.angular_velocity.y, sixaxis.angular_velocity.z);
+			Com_Printf("Angle:            x=% .4f, y=% .4f, z=% .4f\n", sixaxis.angle.x, sixaxis.angle.y, sixaxis.angle.z);
 			Com_Printf("Direction matrix:\n"
 						 "                  [ % .4f,   % .4f,   % .4f ]\n"
 						 "                  [ % .4f,   % .4f,   % .4f ]\n"
 						 "                  [ % .4f,   % .4f,   % .4f ]\n",
-						 sixaxis.direction.direction[0][3], sixaxis.direction.direction[1][3], sixaxis.direction.direction[2][3],
-             sixaxis.direction.direction[0][2], sixaxis.direction.direction[1][2], sixaxis.direction.direction[2][2],
-             sixaxis.direction.direction[0][0], sixaxis.direction.direction[1][0], sixaxis.direction.direction[2][0]);
+						 sixaxis.direction.direction[0][0], sixaxis.direction.direction[1][0], sixaxis.direction.direction[2][0],
+             sixaxis.direction.direction[0][1], sixaxis.direction.direction[1][1], sixaxis.direction.direction[2][1],
+             sixaxis.direction.direction[0][2], sixaxis.direction.direction[1][2], sixaxis.direction.direction[2][2]);
     }
 
     float pitch = sixaxis.angular_velocity.x;
