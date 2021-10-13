@@ -1,5 +1,5 @@
 ## **VoyagerNX**
-A port of Star Trek Voyager: Elite Force Holomatch for the Nintendo Switch. Compatible with both controllers (including WIP gyroscope support!) and keyboard + mouse controls! Based off of Tulip Voyager (a fork of the Lilium Voyager ioquake3 engine).
+A port of Star Trek Voyager: Elite Force Holomatch for the Nintendo Switch. Compatible with both controllers (including WIP gyroscope support!) and keyboard + mouse controls! Based off of Tulip Voyager (a fork of the Lilium Voyager ioquake3 engine). Currently all releases are built from the "main" branch.
 
 ![20211005_072659](https://user-images.githubusercontent.com/56975081/136713142-7ff13e8d-5202-4092-9974-55046e2dff2b.jpg)
 
