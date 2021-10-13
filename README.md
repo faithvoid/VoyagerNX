@@ -38,7 +38,7 @@ Modify your hmconfig.cfg file to add these variables, or replace hmconfig.cfg wi
 ```
 seta in_gyromouse "1"
 seta in_gyromouse_debug "0"
-seta in_gyromouse_yaw_axis "0" // 0 for handheld, 1 for controller.
+seta in_gyromouse_yaw_axis "0" // 0 for handheld, 1 for controller. Type the command in console without "seta" to swap between modes in-game.
 seta in_gyromouse_pitch "-10"
 seta in_gyromouse_yaw "-20.0"
 seta in_gyromouse_pitch_ui "0.0"
