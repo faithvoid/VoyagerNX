@@ -38,7 +38,7 @@ Modify your hmconfig.cfg file to add these variables, or replace hmconfig.cfg wi
 ```
 seta in_gyromouse "1"
 seta in_gyromouse_debug "0"
-seta in_gyromouse_yaw_axis "0"
+seta in_gyromouse_yaw_axis "0" // 0 for handheld, 1 for controller.
 seta in_gyromouse_pitch "-10"
 seta in_gyromouse_yaw "-20.0"
 seta in_gyromouse_pitch_ui "0.0"
@@ -46,7 +46,8 @@ seta in_gyromouse_yaw_ui "0.0"
 ```
 ## TODO
 
-- Finish gyroscope support (75% of the way or so done, just need to clean up the code and check if there's a better way to implement said code.)
+- Finish gyroscope support (75% of the way or so done, just need implement a way to call cvars depending on whether handheld or controller mode is detected + implement a menu item to enable/disable gyro settings).
+- Possibly look into adding splitscreen?
 
 
 
