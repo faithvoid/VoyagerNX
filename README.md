@@ -1,3 +1,59 @@
+## **VoyagerNX**
+A port of Star Trek Voyager: Elite Force Holomatch for the Nintendo Switch. Compatible with both controllers (including gyroscope support!) and keyboard + mouse controls! Based off of Tulip Voyager (a fork of the Lilium Voyager ioquake3 engine). Currently all releases are built from the "main" branch.
+
+![20211005_072659](https://user-images.githubusercontent.com/56975081/136713142-7ff13e8d-5202-4092-9974-55046e2dff2b.jpg)
+
+
+## **Installation**
+- Latest full build including game files can be downloaded and copied from <a href="https://accela.design/downloads/switch-homebrew/VoyagerNX.zip">here!<br/></a>
+- Copy release files to /switch/ folder
+- If providing your own baseoa files, copy baseEF from a copy of Holomatch, making sure not to replace any files.
+- Launch via HBMenu (by pressing R, not album!)
+- Set phasers to frag!
+
+## **Bugs**
+- Sleep mode causes the game and sometimes Horizon to crash. This seems to be common with ioquake3 ports and I have no idea what's causing this yet.
+- Solo Match leads to a softlock at the end of every match. This can be worked around by using "Multi Match" to create a bot match instead. If you end up softlocked, you can close the game by pressing Down to open a terminal, pressing L to bring up a virtual keyboard, typing "/quit", pressing Return, then pressing Enter twice, which should get you back to HBMenu.
+- A small amount of slowdown can happen during really hectic battles in larger maps. This mostly occurs in custom maps and happens regardless of graphical settings (although dropping the resolution may help).
+- If you switch between controller and keyboard + mouse input mid-match, your camera may start spinning wildly. Just press ESC/+, click with your desired input, then press ESC/+ again and it should resolve it. This might not even be a real bug and might just be my wireless keyboard, but I'm putting it here just to be safe.
+
+## **Controls**
+- Left Trigger - Alt Attack
+- Right Trigger - Attack
+- Left Bumper - Crouch (or brings up keyboard when text fields are selected)
+- Right Bumper - Jump
+- X - Use
+- Y - Taunt / Toggle Console (menu)
+- A - Select
+- D-Pad Left + Right - Weapon Select
+- D-Pad Up - Zoom
+- D-Pad Down - Toggle Console (in-game)
+- Minus - Scores
+- Plus - Menu
+- Left Stick In - Vote No
+- Right Stick In - Vote Yes
+
+## Enable Gyro (EXPERIMENTAL)
+Modify your hmconfig.cfg file to add these variables, or replace hmconfig.cfg with hmconfig_gyro.cfg:
+```
+seta in_gyromouse "1"
+seta in_gyromouse_debug "0"
+seta in_gyromouse_pitch "-10"
+seta in_gyromouse_yaw "-20.0"
+seta in_gyromouse_pitch_ui "0.0"
+seta in_gyromouse_yaw_ui "0.0"
+```
+## TODO
+
+- Finish gyroscope support (80% of the way or so done, just need implement a way to implement a menu item to enable/disable gyro settings).
+- Possibly look into adding splitscreen?
+
+
+
+[![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/donate/?cmd=_s-xclick&hosted_button_id=8GF4A3XS7ZHFY)
+
+## **Original ReadMe**
+
 # Tulip Voyager
 **Tulip Voyager** is a fork of [Lilium Voyager](https://github.com/zturtleman/lilium-voyager) by zturtleman. As some
 users have begun using this fork for custom builds it made sense to rename it to avoid confusion.
