@@ -1,5 +1,5 @@
 ## **VoyagerNX**
-A port of Star Trek Voyager: Elite Force Holomatch for the Nintendo Switch. Compatible with both controllers (including WIP gyroscope support!) and keyboard + mouse controls! Based off of Tulip Voyager (a fork of the Lilium Voyager ioquake3 engine). Currently all releases are built from the "main" branch.
+A port of Star Trek Voyager: Elite Force Holomatch for the Nintendo Switch. Compatible with both controllers (including gyroscope support!) and keyboard + mouse controls! Based off of Tulip Voyager (a fork of the Lilium Voyager ioquake3 engine). Currently all releases are built from the "main" branch.
 
 ![20211005_072659](https://user-images.githubusercontent.com/56975081/136713142-7ff13e8d-5202-4092-9974-55046e2dff2b.jpg)
 
@@ -38,7 +38,6 @@ Modify your hmconfig.cfg file to add these variables, or replace hmconfig.cfg wi
 ```
 seta in_gyromouse "1"
 seta in_gyromouse_debug "0"
-seta in_gyromouse_yaw_axis "0" // 0 for handheld, 1 for controller. Type the command in console without "seta" to swap between modes in-game.
 seta in_gyromouse_pitch "-10"
 seta in_gyromouse_yaw "-20.0"
 seta in_gyromouse_pitch_ui "0.0"
@@ -46,7 +45,7 @@ seta in_gyromouse_yaw_ui "0.0"
 ```
 ## TODO
 
-- Finish gyroscope support (75% of the way or so done, just need implement a way to call cvars depending on whether handheld or controller mode is detected + implement a menu item to enable/disable gyro settings).
+- Finish gyroscope support (80% of the way or so done, just need implement a way to implement a menu item to enable/disable gyro settings).
 - Possibly look into adding splitscreen?
 
 
