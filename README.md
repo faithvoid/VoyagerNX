@@ -13,7 +13,7 @@ A port of Star Trek Voyager: Elite Force Holomatch for the Nintendo Switch. Comp
 
 ## **Bugs**
 - Sleep mode causes the game and sometimes Horizon to crash. This seems to be common with ioquake3 ports and I have no idea what's causing this yet.
-- Solo Match leads to a softlock at the end of every match. This can be worked around by using "Multi Match" to create a bot match instead. If you end up softlocked, you can close the game by pressing Down to open a terminal, pressing L to bring up a virtual keyboard, typing "/quit", pressing Return, then pressing Enter twice, which should get you back to HBMenu.
+- Solo Match leads to a softlock at the end of every match if you're using a controller. This can be worked around by either having a USB keyboard+mouse connected, or using "Multi Match" to create a bot match instead. If you end up softlocked while playing w/ the controller, you can close the game by pressing Down to open a terminal, pressing L to bring up a virtual keyboard, typing "/quit", pressing Return, then pressing Enter twice, which should get you back to HBMenu.
 - A small amount of slowdown can happen during really hectic battles in larger maps. This mostly occurs in custom maps and happens regardless of graphical settings (although dropping the resolution may help).
 - If you switch between controller and keyboard + mouse input mid-match, your camera may start spinning wildly. Just press ESC/+, click with your desired input, then press ESC/+ again and it should resolve it. This might not even be a real bug and might just be my wireless keyboard, but I'm putting it here just to be safe.
 
