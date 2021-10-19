@@ -1352,9 +1352,6 @@ void IN_ProcessGyro( void )
 										Cvar_Set( "in_gyromouse_yaw_axis", "1" );
 										}
 
-
-
-
     if ( in_gyromouse_debug->integer ) {
 			Com_Printf("Acceleration:     x=% .4f, y=% .4f, z=% .4f\n", sixaxis.acceleration.x, sixaxis.acceleration.y, sixaxis.acceleration.z);
 			Com_Printf("Angular velocity: x=% .4f, y=% .4f, z=% .4f\n", sixaxis.angular_velocity.x, sixaxis.angular_velocity.y, sixaxis.angular_velocity.z);

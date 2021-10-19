@@ -512,7 +512,7 @@ void *Sys_LoadDll(const char *name, qboolean useSystemLib)
 		Com_Printf("Trying to load \"%s\"...\n", name);
 		dllhandle = Sys_LoadLibrary(name);
 	}
-	
+
 	if(!dllhandle)
 	{
 		const char *topDir;
@@ -538,10 +538,10 @@ void *Sys_LoadDll(const char *name, qboolean useSystemLib)
 		if(!dllhandle)
 		{
 			const char *basePath = Cvar_VariableString("fs_basepath");
-			
+
 			if(!basePath || !*basePath)
 				basePath = ".";
-			
+
 			if(FS_FilenameCompare(topDir, basePath))
 			{
 				len = Com_sprintf(libPath, sizeof(libPath), "%s%c%s", basePath, PATH_SEP, name);
@@ -555,12 +555,12 @@ void *Sys_LoadDll(const char *name, qboolean useSystemLib)
 					Com_Printf("Skipping trying to load \"%s\" from \"%s\", file name is too long.\n", name, basePath);
 				}
 			}
-			
+
 			if(!dllhandle)
 				Com_Printf("Loading \"%s\" failed\n", name);
 		}
 	}
-	
+
 	return dllhandle;
 }
 
@@ -740,8 +740,9 @@ int main( int argc, char **argv )
 	}
 
 	CON_Init( );
-	Com_Init( commandLine );
-	NET_Init( );
+	if ( !Com_Init(commandLine) ) {
+		NET_Init( );
+	}
 
 	while( appletMainLoop() )
 	{
@@ -752,4 +753,3 @@ int main( int argc, char **argv )
 
 	return 0;
 }
-
