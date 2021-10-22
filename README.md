@@ -46,8 +46,8 @@ seta in_gyromouse_yaw_ui "0.0"
 ## TODO
 
 - Finish gyroscope support (80% of the way or so done, just need implement a way to implement a menu item to enable/disable gyro settings).
-- Possibly look into adding splitscreen?
-
+- Implement Switch-specific menu settings in both main menu and pause screens.
+- Hopefully implement splitscreen multiplayer eventually (probably via forking parts of the Spearmint engine which will require a renderer code, controller code and menu code overhaul at minimum.)
 
 
 [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/donate/?cmd=_s-xclick&hosted_button_id=8GF4A3XS7ZHFY)
