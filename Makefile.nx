@@ -32,7 +32,7 @@ include $(DEVKITPRO)/libnx/switch_rules
 #---------------------------------------------------------------------------------
 APP_TITLE	:=	VoyagerNX
 APP_AUTHOR	:=	faithvoid
-APP_VERSION	:=	0.8.4
+APP_VERSION	:=	0.8.5
 
 TARGET		:=	VoyagerNX
 BUILD		:=	build
@@ -428,8 +428,8 @@ DEPENDS	:=	$(OFILES:.o=.d)
 #---------------------------------------------------------------------------------
 # main targets
 #---------------------------------------------------------------------------------
-#all	:	shaders $(OUTPUT).pfs0 $(OUTPUT).nro # uncomment this if building ref_gl2 and comment the line below
-all	:	$(OUTPUT).pfs0 $(OUTPUT).nro
+all	:	shaders $(OUTPUT).pfs0 $(OUTPUT).nro # uncomment this if building ref_gl2 and comment the line below
+#all	:	$(OUTPUT).pfs0 $(OUTPUT).nro
 
 $(OUTPUT).pfs0	:	$(OUTPUT).nso
 
