@@ -1,170 +1,31 @@
-name: Build
+name: Build Switch NRO
 
-on:
-  workflow_dispatch:
-  push:
-    branches: main
-  pull_request:
-    branches: main
-  release:
-    types: [created]
+on: [ push, pull_request, workflow_dispatch ]
 
 jobs:
-  macos:
-    name: Build macOS ${{ matrix.arch }}, ${{ matrix.build_type }}
-    runs-on: macos-11
-    strategy:
-      matrix:
-        arch: ["x86_64"]
-        build_type: ["release"]
-
+  build_nro:
+    runs-on: ubuntu-latest
+    container: devkitpro/devkita64:latest
     steps:
-    - uses: actions/checkout@v2
-      with:
-        submodules: true
-        fetch-depth: 0
+
+    - name: Checkout
+      uses: actions/checkout@v4
 
     - name: Install dependencies
       run: |
-        brew install sdl2
+        dkp-pacman -Syu --noconfirm --needed switch-sdl2 switch-openal-soft switch-mesa switch-libdrm_nouveau switch-glad switch-libvorbis switch-libogg switch-libmad switch-libjpeg-turbo switch-curl switch-mbedtls switch-zlib
 
-    - name: Build
-      working-directory: ${{github.workspace}}
-      shell: bash
-      run: ./make-macosx.sh ${{ matrix.arch }}
-
-    - name: Package
-      working-directory: ${{github.workspace}}/build/${{ matrix.build_type }}-darwin-${{ matrix.arch }}
-      shell: bash
+    - name: Get short SHA
+      id: slug
       run: |
-        tar cvzf "${{ matrix.build_type }}-macos-binaries-${{ matrix.arch }}.tar.gz" libSDL2-2.0.0.dylib tulipvoyded.x86_64 tulipvoyhm.x86_64 tulipvoyhm_renderer_opengl1_x86_64.dylib tulipvoyhm_renderer_opengl2_x86_64.dylib
-        tar cvzf "${{ matrix.build_type }}-macos-app-${{ matrix.arch }}.tar.gz" "Tulip Voyager.app"
+        printf '%s\n' "sha8=$(printf '%s\n' ${GITHUB_SHA} | cut -c1-8)" >> $GITHUB_OUTPUT
 
-    - uses: 'actions/upload-artifact@v2'
-      if: ${{ matrix.build_type == 'release' }}
+    - name: Build VoyagerNX
+      run: make -f Makefile.nx -j$(nproc)
+
+    - name: Push NRO artifact
+      uses: actions/upload-artifact@v4
       with:
-        name: macOS Package (${{ matrix.arch }}), Release
-        path: |
-          ${{github.workspace}}/build/${{ matrix.build_type }}-darwin-${{ matrix.arch }}/*.tar.gz
-
-    # As actions/upload-release-asset seems to demand exact filenames and content types we use a script instead
-    - name: Upload Release
-      if: ${{ github.event_name == 'release' && matrix.build_type == 'release' }}
-      uses: actions/github-script@v4
-      with:
-        github-token: ${{ secrets.GITHUB_TOKEN }}
-        script: |
-          const fs = require('fs').promises;
-          for ( let filename of await fs.readdir('${{github.workspace}}/build/${{ matrix.build_type }}-darwin-${{ matrix.arch }}') )
-          {
-            if ( filename.endsWith('.tar.gz') )
-            {
-              await github.repos.uploadReleaseAsset(
-                {
-                  owner: context.repo.owner,
-                  repo: context.repo.repo,
-                  release_id: ${{ github.event.release.id }},
-                  name: filename,
-                  data: await fs.readFile( "${{github.workspace}}/build/${{ matrix.build_type }}-darwin-${{ matrix.arch }}/" + filename )
-                }
-              );
-            }
-          }
-
-  linux:
-    name: Build ${{ matrix.platform }} ${{ matrix.arch }}, ${{ matrix.build_type }}
-    runs-on: ubuntu-18.04
-    strategy:
-      matrix:
-        platform: [ "linux", "windows" ]
-        arch: [ "x86", "x86_64" ]
-        build_type: [ "release" ]
-
-    steps:
-    - uses: actions/checkout@v2
-      with:
-        submodules: true
-        fetch-depth: 0
-
-    - name: Determine parameters
-      id: parameters
-      shell: bash
-      run: |
-        PKGARTIFACTNAME=$(echo "${{ matrix.platform }} Package (${{ matrix.arch }}), ${{ matrix.build_type }}" | tr ":/" "-")
-        echo "::set-output name=PKGARTIFACTNAME::$PKGARTIFACTNAME"
-        if [ "${{ matrix.platform }}" == "windows" ]; then
-          if [ "${{ matrix.arch }}" == "x86" ]; then
-            echo "::set-output name=PLATFORM::mingw32"
-          else
-            echo "::set-output name=PLATFORM::mingw64"
-          fi
-        else
-          echo "::set-output name=PLATFORM::${{ matrix.platform }}"
-        fi
-
-    - name: Update system
-      run: |
-        sudo apt-get update
-
-    - name: Install dependencies (x86_64)
-      if: ${{ matrix.arch == 'x86_64' }}
-      run: |
-        sudo apt-get install -y libsdl2-dev
-
-    - name: Install dependencies (x86)
-      if: ${{ matrix.arch == 'x86' }}
-      run: |
-        sudo dpkg --add-architecture i386
-        sudo apt-get update
-        sudo apt-get install -y libc6-dev:i386 libsdl2-dev:i386 gcc-multilib g++-multilib
-
-    - name: Install dependencies (Windows)
-      if: ${{ matrix.platform == 'windows' }}
-      run: |
-        sudo apt-get install mingw-w64
-
-    - name: Build
-      shell: bash
-      run: make PLATFORM=${{steps.parameters.outputs.PLATFORM}} ARCH=${{ matrix.arch }} ${{ matrix.build_type }}
-
-    - name: Package
-      shell: bash
-      working-directory: ${{github.workspace}}/build/${{matrix.build_type}}-${{steps.parameters.outputs.PLATFORM}}-${{ matrix.arch }}
-      run: |
-        if [ "${{ matrix.platform }}" == "windows" ]; then
-          zip -r "${{matrix.build_type}}-${{matrix.platform}}-${{steps.parameters.outputs.PLATFORM}}-${{ matrix.arch }}.zip" ./*.exe ./*.dll
-        else
-          tar cvzf "${{matrix.build_type}}-${{steps.parameters.outputs.PLATFORM}}-${{ matrix.arch }}.tar.gz" ./tulip*
-        fi
-
-    - uses: 'actions/upload-artifact@v2'
-      if: ${{ matrix.build_type == 'Release' }}
-      with:
-        name: ${{ steps.parameters.outputs.PKGARTIFACTNAME }}
-        path: |
-          ${{github.workspace}}/build/${{matrix.build_type}}-${{steps.parameters.outputs.PLATFORM}}-${{ matrix.arch }}/*.zip
-          ${{github.workspace}}/build/${{matrix.build_type}}-${{steps.parameters.outputs.PLATFORM}}-${{ matrix.arch }}/*.tar.gz
-
-    # As actions/upload-release-asset seems to demand exact filenames and content types we use a script instead
-    - name: Upload Release
-      if: ${{ github.event_name == 'release' && matrix.build_type == 'release' }}
-      uses: actions/github-script@v4
-      with:
-        github-token: ${{ secrets.GITHUB_TOKEN }}
-        script: |
-          const fs = require('fs').promises;
-          for ( let filename of await fs.readdir('${{github.workspace}}/build/${{matrix.build_type}}-${{steps.parameters.outputs.PLATFORM}}-${{ matrix.arch }}/') )
-          {
-            if ( filename.endsWith('.tar.gz') || filename.endsWith('.zip') )
-            {
-              await github.repos.uploadReleaseAsset(
-                {
-                  owner: context.repo.owner,
-                  repo: context.repo.repo,
-                  release_id: ${{ github.event.release.id }},
-                  name: filename,
-                  data: await fs.readFile( "${{github.workspace}}/build/${{matrix.build_type}}-${{steps.parameters.outputs.PLATFORM}}-${{ matrix.arch }}/" + filename )
-                }
-              );
-            }
-          }
+        name: voyagernx-build_${{ steps.slug.outputs.sha8 }}
+        path: VoyagerNX.nro
+        if-no-files-found: error

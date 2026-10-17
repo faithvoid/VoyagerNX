@@ -1175,16 +1175,19 @@ void CL_InitUI( void ) {
 		Com_Error( ERR_FATAL, "VM_Create on UI failed" );
 	}
 
+#ifdef ELITEFORCE
+	// Set before UI_INIT: the retail ui.qvm reads ui_cdkeychecked during init to decide on the
+	// CD key menu. ui_cdkeychecked2 alone does not gate it; kept for parity.
+	Cvar_SetValue("ui_cdkeychecked", 1);
+	Cvar_SetValue("ui_cdkeychecked2", 1);
+#endif
+
 	// sanity check
 	v = VM_Call( uivm, UI_GETAPIVERSION );
 	if (v == UI_OLD_API_VERSION) {
 //		Com_Printf(S_COLOR_YELLOW "WARNING: loading old Quake III Arena User Interface version %d\n", v );
 		// init for this gamestate
 		VM_Call( uivm, UI_INIT, (clc.state >= CA_AUTHORIZING && clc.state < CA_ACTIVE));
-
-		#ifdef ELITEFORCE
-		Cvar_SetValue("ui_cdkeychecked2", 1);
-		#endif
 	}
 	else if (v != UI_API_VERSION) {
 		// Free uivm now, so UI_SHUTDOWN doesn't get called later.
@@ -1197,10 +1200,6 @@ void CL_InitUI( void ) {
 	else {
 		// init for this gamestate
 		VM_Call( uivm, UI_INIT, (clc.state >= CA_AUTHORIZING && clc.state < CA_ACTIVE) );
-
-		#ifdef ELITEFORCE
-		Cvar_SetValue("ui_cdkeychecked2", 1);
-		#endif
 	}
 }
 

@@ -210,10 +210,8 @@ static keyNum_t IN_TranslateSDLToQ3Key( SDL_Keysym *keysym, qboolean down )
 
 	if( keysym->scancode >= SDL_SCANCODE_1 && keysym->scancode <= SDL_SCANCODE_0 )
 	{
-		// Always map the number keys as such even if they actually map
-		// to other characters (eg, "1" is "&" on an AZERTY keyboard).
-		// This is required for SDL before 2.0.6, except on Windows
-		// which already had this behavior.
+		// Always map number keys as numbers, even if they type other chars (AZERTY "1" is "&").
+		// Needed for SDL before 2.0.6; Windows already did this.
 		if( keysym->scancode == SDL_SCANCODE_0 )
 			key = '0';
 		else
@@ -309,11 +307,8 @@ static keyNum_t IN_TranslateSDLToQ3Key( SDL_Keysym *keysym, qboolean down )
 			default:
 				if( !( keysym->sym & SDLK_SCANCODE_MASK ) && keysym->scancode <= 95 )
 				{
-					// Map Unicode characters to 95 world keys using the key's scan code.
-					// FIXME: There aren't enough world keys to cover all the scancodes.
-					// Maybe create a map of scancode to quake key at start up and on
-					// key map change; allocate world key numbers as needed similar
-					// to SDL 1.2.
+					// Map Unicode characters to 95 world keys by scan code. FIXME: too few world keys
+					// for all scancodes; allocate them on demand per key map, as SDL 1.2 did.
 					key = K_WORLD_0 + (int)keysym->scancode;
 				}
 				break;
@@ -462,8 +457,6 @@ IN_InitKeyMaps
 */
 static void IN_InitKeys( void )
 {
-	SDL_StartTextInput( );
-
 	int i;
 	for (i = 0; i < K_LAST_KEY; i++)
 		keyboardShiftMap[i] = i;
@@ -515,10 +508,8 @@ static void IN_InitJoystick( void )
 	gamepad = NULL;
 	memset(&stick_state, '\0', sizeof (stick_state));
 
-	// SDL 2.0.4 requires SDL_INIT_JOYSTICK to be initialized separately from
-	// SDL_INIT_GAMECONTROLLER for SDL_JoystickOpen() to work correctly,
-	// despite https://wiki.libsdl.org/SDL_Init (retrieved 2016-08-16)
-	// indicating SDL_INIT_JOYSTICK should be initialized automatically.
+	// SDL 2.0.4 needs SDL_INIT_JOYSTICK separate from SDL_INIT_GAMECONTROLLER for
+	// SDL_JoystickOpen(), despite the SDL_Init wiki saying it is automatic.
 	if (!SDL_WasInit(SDL_INIT_JOYSTICK))
 	{
 		Com_DPrintf("Calling SDL_Init(SDL_INIT_JOYSTICK)...\n");
@@ -1273,9 +1264,7 @@ static void IN_ProcessEvents( void )
 							Cvar_Set( "r_mode", "-1" );
 
 
-							// Wait until user stops dragging for 1 second, so
-							// we aren't constantly recreating the GL context while
-							// he tries to drag...
+							// Wait 1 second after dragging stops so the GL context is not recreated mid-drag.
 							vidRestartTime = Sys_Milliseconds( ) + 1000;
 						}
 						break;
